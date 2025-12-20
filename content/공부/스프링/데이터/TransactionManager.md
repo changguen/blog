@@ -1,0 +1,7 @@
+- 트랜잭션의 시작, 커밋, 롤백을 관리하는 인터페이스이다.
+- 마커 인터페이스이기 때문에, 보통 `PlatformTransactionManager`를 사용하게 된다.
+- 대표 구현체
+	- `DataSourceTransactionManager` : [[DataSource]]를 직접 사용하여 트랜잭션 관리
+	- `JpaTransactionManager` : EntityManagerFactory를 사용하여 영속성 컨텍스트 관리
+	- `JtaTransactionManager` : 여러 DB에 걸친 트랜잭션을 관리할 때 사용
+- [[@Transactional]] 도 결국 이 TransactionManager를 사용한다.
