@@ -31,6 +31,7 @@
 		- createTime
 		- [[스프링 배치 ExecutionContext|executionContext]] : 실행 간에 지속되어야 하는 데이터
 		- faliureExceptions : 실행 중 발생한 예외 목록
+- 참고 : 구현체는 SimpleJob이다. [[스프링 배치 Flow|FlowJob]]도 있다.
 ## Job 구성 코드 예제
 ```java
 @Bean
