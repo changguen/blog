@@ -36,4 +36,4 @@ public Job job(JobRepository jobRepository, Step stepA, Step stepB, Step stepC) 
 	- `?` : 1개 문자 일치
 - 이 구성을 자동으로 가장 구체적인 것부터 정렬한다.
 - **주의! `ExitStatus` 와 `BatchStatus`는 다르다.**
-  `ExitStatus`는 열거형이 아니며, 따라서 [[Listener|StepExecutionListener]]를 통해서 커스터마이징한 `ExitStatus`를 응답하고, 이를 참조할 수 있다.[]
+  `ExitStatus`는 열거형이 아니며, 따라서 [[Listener|StepExecutionListener]]를 통해서 커스터마이징한 `ExitStatus`를 응답하고, 이를 참조할 수 있다.
