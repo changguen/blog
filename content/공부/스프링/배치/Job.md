@@ -1,4 +1,4 @@
-> 전체 배치 프로세스의 가장 상위 개념, [[스프링 배치 Step|Step]]들의 논리적 묶음
+> 전체 배치 프로세스의 가장 상위 개념, [[Step|Step]]들의 논리적 묶음
 
 ![[Pasted image 20251220143556.png]]
 - **JobInstance**
@@ -29,17 +29,7 @@
 		- startTime
 		- endTime
 		- createTime
-		- [[스프링 배치 ExecutionContext|executionContext]] : 실행 간에 지속되어야 하는 데이터
+		- [[ExecutionContext|executionContext]] : 실행 간에 지속되어야 하는 데이터
 		- faliureExceptions : 실행 중 발생한 예외 목록
 - 참고 : 구현체는 SimpleJob이다. [[스프링 배치 Flow|FlowJob]]도 있다.
-## Job 구성 코드 예제
-```java
-@Bean
-public Job footballJob(JobRepository jobRepository) {
-    return new JobBuilder("footballJob", jobRepository)
-                     .start(playerLoad())
-                     .next(gameLoad())
-                     .next(playerSummarization())
-                     .build();
-}
-```
+- [[스프링 배치 Job 구성하기|구성 방법]]

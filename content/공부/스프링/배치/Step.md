@@ -1,4 +1,4 @@
-> [[스프링 배치 Job|Job]]을 구성하는 독립적인 단계
+> [[Job|Job]]을 구성하는 독립적인 단계
 
 ![[Pasted image 20251220145458.png]]
 - 모든 `Job`은 하나 이상의 Step으로 구성된다.
@@ -10,7 +10,7 @@
 	- 다음 구성 요소를 가진다.
 		- Status : 실행/시작/종료 상태
 		- start/endTime
-		- [[스프링 배치 ExecutionContext|executionContext]] : 실행 간에 지속되어야 하는 데이터
+		- [[ExecutionContext|executionContext]] : 실행 간에 지속되어야 하는 데이터
 		- read/writeCount : 읽은/기록된 항목의 수
 		- commit/rollbackCount : 커밋된 트랜잭션의 수
 		- rollbackCount : 트랜잭션이 롤백된 횟수

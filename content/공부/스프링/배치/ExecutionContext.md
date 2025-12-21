@@ -1,6 +1,6 @@
 > Step/Job 단위로 관리되는 실행 컨텍스트
 
-- [[스프링 배치 Step|StepExecution]] / [[스프링 배치 Job|JobExecution]] 범위에 속하는 지속성 상태를 저장할 수 있다.
+- [[Step|StepExecution]] / [[Job|JobExecution]] 범위에 속하는 지속성 상태를 저장할 수 있다.
   `Step/JobExecution.getExecutionContext()` 를 통해 가져온다.
 - 재시작을 용이하게 만든다.
   ItemReader 등에서 데이터를 읽고 커밋을 계속한다.
