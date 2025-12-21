@@ -13,3 +13,18 @@ public interface ItemStream {
 	}
 }
 ```
+## 주의 : ItemStream은 스프링에 의해서 주입된다.
+- 따라서 Reader 가 내부 필드로 가진 Reader에게 작업을 위임하는 등의 패턴에서는 `ExecutionContext`를 제대로 받아보지 못한다.
+- 이 경우 스프링에게 '얘한테도 ExecutionContext 넣어줘' 라고 말해야 하는데, 이는 [[Step]] 구성 과정에서 수행한다.
+```java
+@Bean
+public Step step1(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+	return new StepBuilder("step1", jobRepository)
+				.<String, String>chunk(2).transactionManager(transactionManager)
+				.reader(itemReader())
+				.writer(compositeItemWriter())
+				.stream(fileItemWriter1())
+				.stream(fileItemWriter2())
+				.build();
+}
+```

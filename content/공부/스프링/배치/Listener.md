@@ -15,5 +15,5 @@ public interface JobExecutionListener {
 	- `ChunkListener` : 청크의 시작과 끝, 예외 발생
 	- `ItemReadListener` : 아이템을 읽기 전과 후, 예외 발생
 	- `ItemWriteListener` : 아이템을 쓰기 전과 후, 예외 발생
-	- ...
+	- `SkipListener`, `ItemProcessListener`
 - 이것들을 구현하여 [[Job|Job]]과 [[Step|Step]] 구성시에 사용하면 된다. ([[스프링 배치 Job 구성하기]])
