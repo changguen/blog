@@ -37,3 +37,10 @@ public Job job(JobRepository jobRepository, Step stepA, Step stepB, Step stepC) 
 - 이 구성을 자동으로 가장 구체적인 것부터 정렬한다.
 - **주의! `ExitStatus` 와 `BatchStatus`는 다르다.**
   `ExitStatus`는 열거형이 아니며, 따라서 [[Listener|StepExecutionListener]]를 통해서 커스터마이징한 `ExitStatus`를 응답하고, 이를 참조할 수 있다.
+## Job의 BatchStatus와 ExitStatus 결정
+- [[Step]]의 `BatchStatus`, `ExitStatus`는 명료하다. 코드에 의해 결정된다.
+- 하지만, [[Job]]의 그것은 설정에 따라 달라진다.
+- **기본**
+	- Step의 ExitStatus가 FAILED로 끝나면 Job의 ExitStatus와 BatchStatus는 모두 FAILED가 된다.
+	- 이외에는 둘 다 COMPLETED가 된다.
+- 위 케이스로 보통 충분하지만, 아닌 경우도 존재한다.
