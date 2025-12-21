@@ -19,7 +19,7 @@
 	```java
 	public record JobParameter<T>(String name, T value, Class<T> type, boolean identifying)
 	```
-	- 모든 `JobParameter`가 식별에 기여하는 것은 아니다.
+	- 모든 `JobParameter`가 식별에 기여하는 것은 아니다. (identifying 참고)
 - **JobExecution**
 	- 하나의 `JobInstance`에 대한 **물리적인 실행 시도**
 	- `JobInstance`는 `JobExecution`이 성공적으로 끝나지 않으면 완료된 것으로 간주되지 않는다.
@@ -32,4 +32,41 @@
 		- [[ExecutionContext|executionContext]] : 실행 간에 지속되어야 하는 데이터
 		- faliureExceptions : 실행 중 발생한 예외 목록
 - 참고 : 구현체는 SimpleJob이다. [[스프링 배치 Flow|FlowJob]]도 있다.
-- [[스프링 배치 Job 구성하기|구성 방법]]
+## Job 구성 방법
+- `JobBuilder`를 통해 구성한다.
+- 기본적으로는 [[Step|Step]]을 끼워넣어 구성하면 된다.
+- [[스프링 배치 Flow|Flow]]를 끼워넣을 수도 있다. (병렬과 스플릿 개념이 추가된다.)
+- [[Listener|리스너]]를 끼워넣을 수도 있다.
+- `JobExecutionDecider`를 끼워넣어서 흐름을 제어할 수 있다. (=Decision)
+- `JobParametersValidator`를 끼워넣어서 검증할 수 있다. 
+- **재시작 가능성**
+	- [[Job|JobInstance]]에 대해 [[Job|JobExecution]]이 이미 있는 경우, 다음 JobExecution은 **재시도로 간주된다.**
+	- 이상적으로는 모든 작업이 중단된 지점부터 시작되어야 하지만, 불가능한 시나리오도 있다.
+	  -> `preventRestart()` 구성을 통해 재시작을 막을 수 있으며, 강제로 재시작하면 `JobRestartException` 예외가 터진다.
+```java
+@Bean
+public Job footballJob(JobRepository jobRepository) {
+    return new JobBuilder("footballJob", jobRepository)
+                     .start(playerLoad())
+                     .next(gameLoad())
+                     .next(playerSummarization())
+                     .build();
+}
+```
+## JobRepository 구성 방법
+- [공식 문서](https://docs.spring.io/spring-batch/reference/job/configuring-repository.html)
+- [[Job|JobExecution]], [[Step|StepExecution]]과 같은 도메인 객체의 기본 CRUD 작업에 사용된다.
+- 가장 간단한 구현체는 `ResourcelessJobRepository` 이며, 아무런 메타데이터를 저장하지 않는다.
+	- 당연하게 [[ExecutionContext|ExecutionContext]]를 지원하지도 않는다.
+	- **기본적으로 `@EnableBatchProcessing` 또는 `DefaultBatchConfiguration`을 사용할 때 제공된다.**
+- 데이터베이스 기반의 구현체는 JDBC 기반과 MongoDB 기반이 제공된다.
+- JDBC 기반으로 구성하기 위해서는 `@EnableJdbcJobRepository`를 사용한다.
+```java
+@EnableJdbcJobRepository(
+		dataSourceRef = "batchDataSource",
+		transactionManagerRef = "batchTransactionManager",
+		tablePrefix = "BATCH_",
+		maxVarCharLength = 1000,
+		isolationLevelForCreate = "SERIALIZABLE")
+```
+- 위 방법으로 구성할 수 없는 경우, `JdbcJobRepositoryFactoryBean`을 사용하거나, `SimpleJobRepository`를 사용해야 한다.
