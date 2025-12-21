@@ -70,3 +70,17 @@ public Job footballJob(JobRepository jobRepository) {
 		isolationLevelForCreate = "SERIALIZABLE")
 ```
 - 위 방법으로 구성할 수 없는 경우, `JdbcJobRepositoryFactoryBean`을 사용하거나, `SimpleJobRepository`를 사용해야 한다.
+- 다음처럼 실패시 조건에 따라 적절하게 분기 처리할 수 있다.
+```java
+@Bean
+public Job job(JobRepository jobRepository, Step stepA, Step stepB, Step stepC, Step stepD) {
+	return new JobBuilder("job", jobRepository)
+				.start(stepA)
+				.on("*").to(stepB)
+				.from(stepA).on("FAILED").to(stepC)
+				.from(stepA).on("COMPLETED").to(stepD)
+				.end()
+				.build();
+}
+
+```

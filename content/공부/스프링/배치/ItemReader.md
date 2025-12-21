@@ -25,3 +25,4 @@ public interface ItemReader<T> {
 	- `JsonItemReader`
 	- `StaxEventItemReader`
 - 이외에도 더 많다. 필요한 경우 찾아보면 될 것 같다.
+[[ItemStream]]
