@@ -14,3 +14,10 @@ public JobOperatorFactoryBean jobOperator(JobRepository jobRepository) {
 ```
 - 이는 동기적으로 작동하며, 비동기로 작동시키고 싶으면 [[AsyncTaskExecutor|TaskExecutor]]를 넘겨주어야 한다.
 - 팩토리 빈으로 등록하여 구성하면 내부적으로 트랜잭션 처리가 적용된다.
+## 우아한 종료
+- 다음처럼 설정하면 프레임워크로 제어권이 반환되는 즉시 `BatchStatus.STOPPED`가 된다.
+- StepExceution과 JobExecution에 대해 모두 동일하게 작용한다.
+```java
+Set<Long> executions = jobOperator.getRunningExecutions("sampleJob");
+jobOperator.stop(executions.iterator().next());
+```
