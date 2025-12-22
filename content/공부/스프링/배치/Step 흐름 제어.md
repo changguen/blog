@@ -38,7 +38,7 @@ public Job job(JobRepository jobRepository, Step stepA, Step stepB, Step stepC) 
 - **주의! `ExitStatus` 와 `BatchStatus`는 다르다.**
   `ExitStatus`는 열거형이 아니며, 따라서 [[Listener|StepExecutionListener]]를 통해서 커스터마이징한 `ExitStatus`를 응답하고, 이를 참조할 수 있다.
 - 플로우를 더 프로그래매틱하게 결정하기 위해서 `JobExecutionDecider`를 구현한 후, 이를 설정에 끼워넣을 수도 있다.
-### Job의 BatchStatus와 ExitStatus 결정
+### 조건부 흐름에서의 Job의 BatchStatus와 ExitStatus 결정
 - [[Step]]의 `BatchStatus`, `ExitStatus`는 명료하다. 코드에 의해 결정된다.
   하지만, [[Job]]의 그것은 설정에 따라 달라진다.
 - **기본 (별도의 전이 설정 X)**
