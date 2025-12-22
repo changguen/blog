@@ -31,11 +31,11 @@
 		- createTime
 		- [[ExecutionContext|executionContext]] : 실행 간에 지속되어야 하는 데이터
 		- faliureExceptions : 실행 중 발생한 예외 목록
-- 참고 : 구현체는 SimpleJob이다. [[스프링 배치 Flow|FlowJob]]도 있다.
+- 참고 : 구현체는 SimpleJob이다. [[Flow|FlowJob]]도 있다.
 ## Job 구성 방법
 - `JobBuilder`를 통해 구성한다.
 - 기본적으로는 [[Step|Step]]을 끼워넣어 구성하면 된다.
-- [[스프링 배치 Flow|Flow]]를 끼워넣을 수도 있다. (병렬과 스플릿 개념이 추가된다.)
+- [[Flow|Flow]]를 끼워넣을 수도 있다. (병렬과 스플릿 개념이 추가된다.)
 - [[Listener|리스너]]를 끼워넣을 수도 있다.
 - `JobExecutionDecider`를 끼워넣어서 흐름을 제어할 수 있다. (=Decision)
 - `JobParametersValidator`를 끼워넣어서 검증할 수 있다. 
