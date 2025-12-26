@@ -21,9 +21,12 @@
 	- **[[ItemProcessor]]** : 데이터를 가공하거나 변환하기 (선택적!)
 	- **[[ItemWriter]]** : 가공된 데이터를 **청크 단위로** 한번에 특정 대상에 쓴다.
 - 즉, 청크가 10이면 다음처럼 돈다.
-  Reader : 10번
-  Processcor : 10번
-  Writer : 1번
+  `Reader -> Processor` x 10번 -> Writer x 1번
+- 청크 크기를 적절하게 튜닝하는 것이 중요하다.
+  너무 크면 한번에 불러오는 양이 많아서 메모리 부족, 너무 작으면 I/O가 빈번하여 느려진다.
+  부하테스트를 통한 최적값 도출이 중요하다.
+- 또한 [[TransactionManager]]를 세팅했다면, 청크 단위 트랜잭션이 커밋된다.
+  [[ItemReader]] 이후, [[ItemProcessor]] 이전에 트랜잭션이 시작된다.
 ## StepExecution
 - `Step`을 실행하려는 단일 시도이다.
 - 실제로 `Step`이 실행되기 전까지는 생성되지 않는다.
